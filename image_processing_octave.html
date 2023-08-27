@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="img/icon.ico">
+    <title>OctaveImg</title>
+</head>
+<body>
+
+<header class="header" id="header">
+    <div class="container">
+        <div class="header__inner">
+            <a class="header__logo" href="index.html">OctaveImg</a>
+            <nav class="nav" id="nav">
+                <a class="nav__link" href="index.html">На главную</a>
+                <a class="nav__link" href="image_processing.html">Обработка изображений</a>
+                <a class="nav__link" href="basic_methods.html">Основные методы</a>
+                <a class="nav__link" href="image_package.html">'Image'</a>
+            </nav>
+            <button class="nav-toggle" id="nav_toggle" type="button">
+                <span class="nav-toggle__item">Menu</span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<div class="page">
+    <div class="intro" id="intro">
+        <div class="container">
+            <div class="intro__inner">
+                <h1 class="intro__title">Image<br>Processing&nbspin<br>Octave</h1>
+            </div>
+        </div>
+    </div>
+
+    <section class="section" id="image__processing">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title">Обработка изображений в Octave</h2>
+                <div class="section__text">
+                    <p>Реализуем основные возможности пакета 'Image' и встроенных функций в Octave. Начнем с загрузки изображения и его визуализации в программной среде.</p>
+                    <div class="code">
+                        <code>
+                            img = imread("image.jpg");<br>
+                            figure;<br>
+                            imshow(img);<br>
+                            title("image.jpg");
+                        </code>
+                    </div>
+                    <figure>
+                        <img src="img/octave_1.jpg" alt="Результат вывода изображения">
+                        <figcaption><em>Рис. 1. Результат вывода изображения.</em></figcaption>
+                    </figure>
+
+                    <p>Далее применим кадрирование области нашего изображения.</p>
+                    <div class="code">
+                        <code>
+                            img_crop = img(120:280, 150:380, :);<br>
+                            figure;<br>
+                            imshow(img_crop);<br>
+                            title("Cropped image");
+                        </code>
+                    </div>
+                    <figure>
+                        <img src="img/octave_2.jpg" alt="Результат кадрирования изображения">
+                        <figcaption><em>Рис. 2. Результат кадрирования изображения.</em></figcaption>
+                    </figure>
+
+                    <p>При помощи масштабирования уменьшим и увеличим исходное изображение на 50% соответсвенно.</p>
+                    <div class="code">
+                        <code>
+                            img_small = imresize(img, 0.5);<br>
+                            img_big = imresize(img, 1.5);<br>
+                            figure;<br>
+                            subplot(1, 2, 1);<br>
+                            imagesc(img_small);<br>
+                            title("Scale 0.5");<br>
+                            subplot(1, 2, 2);<br>
+                            imagesc(img_big);<br>
+                            title("Scale 1.5");
+                        </code>
+                    </div>
+                    <figure>
+                        <img src="img/octave_3.jpg" alt="Результат масштабирования изображения">
+                        <figcaption><em>Рис. 3. Результат масштабирования изображения.</em></figcaption>
+                    </figure>
+
+                    <p>Разложим исходное изображение на отдельные цветовые каналы: R, G, B.</p>
+                    <div class="code">
+                        <span>
+                            channel_R = img(:, :, 1);<br>
+                            channel_G = img(:, :, 2);<br>
+                            channel_B = img(:, :, 3);<br>
+                            figure;<br>
+                            subplot(2, 2, 1);<br>
+                            imshow(img);<br>
+                            title("RGB");<br>
+                            subplot(2, 2, 2);<br>
+                            imshow(channel_R);<br>
+                            title("Red channel");<br>
+                            subplot(2, 2, 3);<br>
+                            imshow(channel_G);<br>
+                            title("Green channel");<br>
+                            subplot(2, 2, 4);<br>
+                            imshow(channel_B);<br>
+                            title("Blue channel");
+                        </span>
+                    </div>
+                    <figure>
+                        <img src="img/octave_4.jpg" alt="Результат разложения изображения на отдельные цветовые каналы">
+                        <figcaption><em>Рис. 4. Результат разложения изображения на отдельные цветовые каналы.</em></figcaption>
+                    </figure>
+
+                    <p>Теперь объединим отдельные цветовые каналы и убедимся, что получили исходное изображение RGB.</p>
+                    <div class="code">
+                        <code>
+                            figure;<br>
+                            comb(:, :, 1) = channel_R;<br>
+                            comb(:, :, 2) = channel_G;<br>
+                            comb(:, :, 3) = channel_B;<br>
+                            comb = uint8(comb);<br>
+                            imshow(comb);<br>
+                            title("Combining split channels");
+                        </code>
+                    </div>
+                    <figure>
+                        <img src="img/octave_5.jpg" alt="Результат объединения отдельных цветовых каналов изображения">
+                        <figcaption><em>Рис. 5. Результат объединения отдельных цветовых каналов изображения.</em></figcaption>
+                    </figure>
+
+                    <p>Далее выведем наше изображение в разных цветовых форматах: RGB, индексированном, в оттенках серого, бинарном (черно-белом).</p>
+                    <div class="code">
+                        <code>
+                            img_gray = rgb2gray(img);<br>
+                            img_bw = im2bw(img_gray);<br>
+                            figure;<br>
+                            subplot(2, 2, 1);<br>
+                            imshow(img);<br>
+                            title("RGB");<br>
+                            subplot(2, 2, 2);<br>
+                            image([0,600], [0,400], img);<br>
+                            title("Indexed");<br>
+                            subplot(2, 2, 3);<br>
+                            imshow(img_gray);<br>
+                            title("Gray");<br>
+                            subplot(2, 2, 4);<br>
+                            imshow(img_bw);<br>
+                            title("BW");
+                        </code>
+                    </div>
+                    <figure>
+                        <img src="img/octave_6.jpg" alt="Вывод изображения в разных цветовых форматах">
+                        <figcaption><em>Рис. 6. Вывод изображения в разных цветовых форматах.</em></figcaption>
+                    </figure>
+
+                    <p>Далее выведем наше изображение в разных цветовых форматах: RGB, индексированном, в оттенках серого, бинарном (черно-белом).</p>
+                    <div class="code">
+                        <code>
+                            img_gray = rgb2gray(img);<br>
+                            img_bw = im2bw(img_gray);<br>
+                            figure;<br>
+                            subplot(2, 2, 1);<br>
+                            imshow(img);<br>
+                            title("RGB");<br>
+                            subplot(2, 2, 2);<br>
+                            image([0,600], [0,400], img);<br>
+                            title("Indexed");<br>
+                            subplot(2, 2, 3);<br>
+                            imshow(img_gray);<br>
+                            title("Gray");<br>
+                            subplot(2, 2, 4);<br>
+                            imshow(img_bw);<br>
+                            title("BW");
+                        </code>
+                    </div>
+                    <figure>
+                        <img src="img/octave_6.jpg" alt="Вывод изображения в разных цветовых форматах">
+                        <figcaption><em>Рис. 6. Вывод изображения в разных цветовых форматах.</em></figcaption>
+                    </figure>
+
+                    <p>Выведем исходное изображение и его же осветленную и затемненную версию для сравнения.</p>
+                    <div class="code">
+                        <code>
+                            img_lighter = img * 1.5;<br>
+                            img_darker = img * 0.5;<br>
+                            figure;<br>
+                            subplot(1, 3, 1);<br>
+                            imshow(img);<br>
+                            title("Original");<br>
+                            subplot(1, 3, 2);<br>
+                            imshow(img_lighter);<br>
+                            title("Lighter");<br>
+                            subplot(1, 3, 3);<br>
+                            imshow(img_darker);<br>
+                            title("Darker");
+                        </code>
+                    </div>
+                    <figure>
+                        <img src="img/octave_7.jpg" alt="Результат осветления и затемнения изображения" style="max-width: 90%;">
+                        <figcaption><em>Рис. 7. Результат осветления и затемнения изображения.</em></figcaption>
+                    </figure>
+
+                    <p>Усилим резкость исходного изображения.</p>
+                    <div class="code">
+                        <code>
+                            img_sh = imsharpen(img, "Radius", 1.5, "Amount", 1.5);<br>
+                            figure;<br>
+                            subplot(1, 2, 1);<br>
+                            imshow(img);<br>
+                            title("Original");<br>
+                            subplot(1, 2, 2);<br>
+                            imshow(img_sh);<br>
+                            title("Sharpened");
+                        </code>
+                    </div>
+                    <figure>
+                        <img src="img/octave_8.jpg" alt="Результат усиления резкости изображения">
+                        <figcaption><em>Рис. 8. Результат усиления резкости изображения.</em></figcaption>
+                    </figure>
+
+                    <p>Размоем изображение по гауссовой матрице.</p>
+                    <div class="code">
+                        <code>
+                            f = fspecial("Gaussian", 10, 10);<br>
+                            img_blur = imfilter(img, f);<br>
+                            figure;<br>
+                            subplot(1, 2, 1);<br>
+                            imshow(img);<br>
+                            title("Original");<br>
+                            subplot(1, 2, 2);<br>
+                            imshow(img_blur);<br>
+                            title("Blurred");
+                        </code>
+                    </div>
+                    <figure>
+                        <img src="img/octave_9.jpg" alt="Результат размытия изображения">
+                        <figcaption><em>Рис. 9. Результат размытия изображения.</em></figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer" id="footer">
+        <div class="container">
+                <div class="footer__text">
+                    <img src="img/sfedu_logo.png" alt="">
+                    <p>Институт математики, механики и компьютерных наук им. И.И. Воровича</p>   
+                </div>
+            <div class="copyright">
+                <span>&copy 2023 OctaveImg by <a href="https://github.com/XydeWebDev" target="_blank">XydeWebDev</a></span>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
