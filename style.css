@@ -582,4 +582,26 @@ figcaption {
         padding: 0;
         margin: 0;
     }
+
+    @keyframes visibility_1 {
+        0% {
+            opacity: 0;
+            letter-spacing: 4px;
+        }
+        100% {
+            opacity: 1;
+            letter-spacing: normal;
+        }
+    }
+
+    @keyframes visibility_2 {
+        0% {
+            opacity: 0;
+            letter-spacing: 2px;
+        }
+        100% {
+            opacity: 1;
+            letter-spacing: normal;
+        }
+    }
 }
